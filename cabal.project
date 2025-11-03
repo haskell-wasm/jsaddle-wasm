@@ -1,2 +1,23 @@
 packages: .
+
 tests: True
+
+package *
+  optimization: 2
+  ghc-options:
+    -fdicts-cheap
+    -fexpose-all-unfoldings
+    -flate-dmd-anal
+    -flate-specialise
+    -fspecialise-aggressively
+
+  documentation: True
+  haddock-hyperlink-source: True
+  haddock-quickjump: True
+  haddock-html-location: https://hackage.haskell.org/package/$pkg-$version/docs
+
+package aeson
+  flags: -ordered-keymap
+
+package vector
+  flags: -boundschecks
