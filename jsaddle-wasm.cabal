@@ -1,6 +1,6 @@
-cabal-version: 3.0
+cabal-version: 3.14
 name: jsaddle-wasm
-version: 0.1.2.1
+version: 0.2.0.0
 synopsis: Run JSaddle JSM with the GHC Wasm backend
 description: Run JSaddle @JSM@ with the GHC Wasm backend.
 category: Web, Javascript
@@ -32,10 +32,9 @@ common common
     -Wunused-packages
     -Wredundant-constraints
 
-  default-language: GHC2021
+  default-language: GHC2024
   default-extensions:
     BlockArguments
-    LambdaCase
     OverloadedStrings
     TemplateHaskellQuotes
 
@@ -71,7 +70,7 @@ library
     build-depends:
       aeson >=2 && <2.3,
       bytestring >=0.11 && <0.13,
-      ghc-experimental ^>=0.1 || >=9.1000 && <9.1300,
+      ghc-experimental ^>=0.1 || >=9.1000 && <9.1700,
       parser-regex ^>=0.3,
       stm ^>=2.5,
 

@@ -1,5 +1,7 @@
 # Revision history for jsaddle-wasm
 
+## 0.2.0.0 -- TBA
+
 ## 0.1.2.1 -- 2025-07-10
 
  * `Language.Javascript.JSaddle.Wasm.TH`: Make sure that the underlying FFI call has been fully completed.
