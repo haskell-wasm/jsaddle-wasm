@@ -1,5 +1,5 @@
 # jsaddle-wasm
-[![CI](https://github.com/amesgen/jsaddle-wasm/workflows/CI/badge.svg)](https://github.com/amesgen/jsaddle-wasm/actions)
+[![CI](https://github.com/haskell-wasm/jsaddle-wasm/workflows/CI/badge.svg)](https://github.com/haskell-wasm/jsaddle-wasm/actions)
 [![Hackage](https://img.shields.io/hackage/v/jsaddle-wasm)](https://hackage.haskell.org/package/jsaddle-wasm)
 [![Haddocks](https://img.shields.io/badge/documentation-Haddocks-purple)](https://hackage.haskell.org/package/jsaddle-wasm/docs/Language-Javascript-JSaddle-Wasm.html)
 
@@ -12,9 +12,9 @@ This can for example be used to compile and run [Miso][] or [Reflex][] apps in t
 
 ## Examples
 
- - Miso examples: https://github.com/tweag/ghc-wasm-miso-examples
+ - Miso examples: https://github.com/haskell-wasm/ghc-wasm-miso-examples
 
- - Reflex examples: https://github.com/tweag/ghc-wasm-reflex-examples
+ - Reflex examples: https://github.com/haskell-wasm/ghc-wasm-reflex-examples
 
  - Ormolu Live: https://github.com/tweag/ormolu/tree/master/ormolu-live
    (uses the web worker approach described below)
@@ -44,7 +44,7 @@ Now, run the post-linker script as described in the [GHC User's Guide][ghc-users
 
 Then, following the [GHC User's Guide][ghc-users-guide-js-api], you can run the Wasm binary in the browser via e.g. [browser_wasi_shim][]:
 ```javascript
-import { WASI, OpenFile, File, ConsoleStdout } from "@bjorn3/browser_wasi_shim";
+import { WASI, OpenFile, File, ConsoleStdout } from "https://esm.sh/gh/haskell-wasm/browser_wasi_shim";
 import ghc_wasm_jsffi from "./ghc_wasm_jsffi.js";
 
 const fds = [
@@ -130,12 +130,12 @@ package jsaddle-wasm
 
 [^missing-sync-jsffi]: Otherwise, you will see errors involving `unknown type name 'HsFUN'`.
 
-[JSaddle]: https://github.com/ghcjs/jsaddle
+[JSaddle]: https://github.com/haskell-wasm/jsaddle
 [GHC Wasm backend]: https://www.tweag.io/blog/2022-11-22-wasm-backend-merged-in-ghc
 [Miso]: https://github.com/dmjio/miso
 [Reflex]: https://github.com/reflex-frp/reflex
 [ghc-wasm-meta]: https://gitlab.haskell.org/haskell-wasm/ghc-wasm-meta
-[browser_wasi_shim]: https://github.com/bjorn3/browser_wasi_shim
+[browser_wasi_shim]: https://github.com/haskell-wasm/browser_wasi_shim
 [ghc-users-guide-js-api]: https://ghc.gitlab.haskell.org/ghc/doc/users_guide/wasm.html#the-javascript-api
 [WebGHC]: https://webghc.github.io
 [Channel Messaging API]: https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API

@@ -41,7 +41,7 @@ eval jsChunk argTys = do
 -- | The JSaddle GHCJS helpers need to be available in the global scope.
 -- Usually, this is done by evaluating them in a global scope; however, we want
 -- to avoid JS eval (due to CSP, see
--- https://github.com/tweag/ghc-wasm-miso-examples/issues/33), so we instead use
+-- https://github.com/haskell-wasm/ghc-wasm-miso-examples/issues/33), so we instead use
 -- a hack, namely transforming
 --
 -- > function foo(a) {

@@ -1,4 +1,4 @@
--- | See the [README](https://github.com/amesgen/jsaddle-wasm) for more details.
+-- | See the [README](https://github.com/haskell-wasm/jsaddle-wasm) for more details.
 --
 -- While this package also compiles on non-Wasm GHCs for convenience, running
 -- any function from this module will immediately fail in that case.
