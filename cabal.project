@@ -1,5 +1,13 @@
 packages: .
 
+source-repository-package
+  type: git
+  location: https://github.com/haskell-miso/miso-todomvc.git
+
+source-repository-package
+  type: git
+  location: https://github.com/dmjio/miso.git
+
 tests: True
 
 package *
@@ -21,3 +29,5 @@ package aeson
 
 package vector
   flags: -boundschecks
+
+allow-newer: all:jsaddle-wasm

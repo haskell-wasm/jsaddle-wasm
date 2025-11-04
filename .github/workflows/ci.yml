@@ -51,7 +51,7 @@ jobs:
           FLAVOUR: ${{ matrix.flavour }}
 
       - run: |
-          wasm32-wasi-cabal build jsaddle-wasm --dry-run
+          wasm32-wasi-cabal build miso-todomvc --dry-run
 
       - uses: actions/cache@v4
         with:
@@ -61,7 +61,17 @@ jobs:
             ~/.ghc-wasm/.cabal/store
 
       - run: |
-          wasm32-wasi-cabal build jsaddle-wasm
+          cp -r dist-newstyle/src/miso-todo*/static public
+          wasm32-wasi-cabal install miso-todomvc --install-method=copy --installdir=public
+          $(wasm32-wasi-ghc --print-libdir)/post-link.mjs --input public/app.wasm --output public/ghc_wasm_jsffi.js
+
+      - run: |
+          git clone --ref-format=reftable --depth=1 https://github.com/haskell-wasm/playwright.git
+          pushd playwright/examples/todomvc
+          npm install
+          npx playwright install --with-deps --no-shell
+          TODOMVC_DIST_DIR=${{ github.workspace }}/public npx playwright test --reporter=list --workers=$(nproc)
+          popd
 
   ci-native:
     runs-on: ubuntu-24.04
