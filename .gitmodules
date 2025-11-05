@@ -1,0 +1,3 @@
+[submodule "jsaddle"]
+	path = jsaddle
+	url = https://github.com/haskell-wasm/jsaddle.git
