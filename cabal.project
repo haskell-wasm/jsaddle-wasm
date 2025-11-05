@@ -1,4 +1,4 @@
-packages: .
+packages: jsaddle/jsaddle .
 
 source-repository-package
   type: git

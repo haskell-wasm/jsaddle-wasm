@@ -35,6 +35,8 @@ jobs:
             experimental: true
     steps:
       - uses: actions/checkout@v5
+        with:
+          submodules: true
 
       - run: |
           cabal update --ignore-project
@@ -83,6 +85,8 @@ jobs:
           - "9.10"
     steps:
       - uses: actions/checkout@v5
+        with:
+          submodules: true
 
       - run: |
           cabal update --ignore-project
