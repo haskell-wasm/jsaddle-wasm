@@ -38,23 +38,15 @@ common common
     OverloadedStrings
     TemplateHaskellQuotes
 
-library js
-  import: common
-  visibility: public
-  hs-source-dirs: src-js
-  exposed-modules:
-    Language.Javascript.JSaddle.Wasm.JS
-
-  build-depends:
-    base >=4.16 && <5,
-    bytestring >=0.11 && <0.13,
-    jsaddle ^>=0.9,
-
 library
   import: common
-  hs-source-dirs: src
+  hs-source-dirs:
+    src
+    src-js
+
   exposed-modules:
     Language.Javascript.JSaddle.Wasm
+    Language.Javascript.JSaddle.Wasm.JS
     Language.Javascript.JSaddle.Wasm.TH
 
   other-modules:
@@ -62,14 +54,13 @@ library
 
   build-depends:
     base >=4.16 && <5,
+    bytestring >=0.11 && <0.13,
     jsaddle ^>=0.9,
-    jsaddle-wasm:js,
     template-haskell >=2.20 && <2.24,
 
   if arch(wasm32)
     build-depends:
       aeson >=2 && <2.3,
-      bytestring >=0.11 && <0.13,
       ghc-experimental ^>=0.1 || >=9.1000 && <9.1700,
       parser-regex ^>=0.3,
       stm ^>=2.5,
