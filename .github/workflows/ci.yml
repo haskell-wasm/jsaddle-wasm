@@ -20,6 +20,9 @@ jobs:
 
   ci-wasm:
     runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
@@ -74,6 +77,18 @@ jobs:
           npx playwright install --with-deps --no-shell
           TODOMVC_DIST_DIR=${{ github.workspace }}/public npx playwright test --reporter=list --workers=$(nproc)
           popd
+
+      - run: |
+          wasm32-wasi-cabal haddock --haddock-output-dir=dist-haddock
+
+      - if: matrix.flavour == '9.14' && github.event_name == 'push' && github.ref_name == 'master'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist-haddock
+          retention-days: 90
+
+      - if: matrix.flavour == '9.14' && github.event_name == 'push' && github.ref_name == 'master'
+        uses: actions/deploy-pages@v4
 
   ci-native:
     runs-on: ubuntu-24.04
