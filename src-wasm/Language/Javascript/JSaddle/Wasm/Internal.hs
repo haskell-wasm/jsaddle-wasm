@@ -46,6 +46,7 @@ run entryPoint = do
                    let s =
                          BLC8.unlines $
                            [ JSaddle.Files.initState,
+                             "var initialSyncDepth = 0;",
                              "var syncDepth = 0;",
                              "(async () => {",
                              "  while (true) {",

@@ -14,6 +14,8 @@ jsaddleScript =
   BLC8.unlines
     [ JSaddle.Files.ghcjsHelpers,
       JSaddle.Files.initState,
+      "var initialSyncDepth = 0;",
+      "var syncDepth = 0;",
       "function runJSaddle(worker) {",
       "  worker.addEventListener('message', e => {",
       "    const d = e.data;",
