@@ -1,0 +1,11 @@
+import: cabal.common.project
+
+package *
+  optimization: False
+  ghc-options:
+    -fcatch-nonexhaustive-cases
+    -fcheck-prim-bounds
+
+package miso-todomvc
+  ghc-options:
+    -debug
