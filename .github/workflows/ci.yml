@@ -50,13 +50,14 @@ jobs:
           curl -L https://gitlab.haskell.org/haskell-wasm/ghc-wasm-meta/-/archive/master/ghc-wasm-meta-master.tar.gz | tar xz --strip-components=1
           ./setup.sh
           ~/.ghc-wasm/add_to_github_path.sh
-          cp cabal.project.local ${{ github.workspace }}
+          cp cabal.project.local ${{ github.workspace }}/cabal.debug.project.local
+          cp cabal.project.local ${{ github.workspace }}/cabal.release.project.local
           popd
         env:
           FLAVOUR: ${{ matrix.flavour }}
 
       - run: |
-          wasm32-wasi-cabal build miso-todomvc --dry-run
+          wasm32-wasi-cabal --project-file=cabal.release.project build miso-todomvc --dry-run
 
       - uses: actions/cache@v4
         with:
@@ -67,7 +68,7 @@ jobs:
 
       - run: |
           cp -r dist-newstyle/src/miso-todo*/static public
-          wasm32-wasi-cabal install miso-todomvc --install-method=copy --installdir=public
+          wasm32-wasi-cabal --project-file=cabal.release.project install miso-todomvc --install-method=copy --installdir=public
           $(wasm32-wasi-ghc --print-libdir)/post-link.mjs --input public/app.wasm --output public/ghc_wasm_jsffi.js
 
       - run: |
@@ -79,13 +80,23 @@ jobs:
           popd
 
       - run: |
-          wasm32-wasi-cabal haddock --haddock-output-dir=dist-haddock
+          wasm32-wasi-cabal --project-file=cabal.release.project haddock --haddock-output-dir=dist-haddock
 
       - if: matrix.flavour == '9.14' && github.event_name == 'push' && github.ref_name == 'master'
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist-haddock
           retention-days: 90
+
+      - run: |
+          wasm32-wasi-cabal --project-file=cabal.debug.project install miso-todomvc --install-method=copy --installdir=public --overwrite-policy=always
+          $(wasm32-wasi-ghc --print-libdir)/post-link.mjs --input public/app.wasm --output public/ghc_wasm_jsffi.js
+          sed -i -e "s/-H64m/-DS/" public/index.js
+
+      - run: |
+          pushd playwright/examples/todomvc
+          TODOMVC_DIST_DIR=${{ github.workspace }}/public npx playwright test --reporter=list --timeout=90000 --workers=$(nproc)
+          popd
 
       - if: matrix.flavour == '9.14' && github.event_name == 'push' && github.ref_name == 'master'
         uses: actions/deploy-pages@v4
@@ -113,7 +124,7 @@ jobs:
           ghc-version: ${{ matrix.flavour }}
 
       - run: |
-          cabal build jsaddle-wasm --dry-run
+          cabal --project-file=cabal.release.project build jsaddle-wasm --dry-run
 
       - uses: actions/cache@v4
         with:
@@ -123,4 +134,4 @@ jobs:
             ${{ steps.setup-haskell.outputs.cabal-store }}
 
       - run: |
-          cabal build jsaddle-wasm
+          cabal --project-file=cabal.release.project build jsaddle-wasm

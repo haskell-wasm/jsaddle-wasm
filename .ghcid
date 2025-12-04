@@ -1,3 +1,4 @@
---command "exec wasm32-wasi-cabal repl --enable-multi-repl --repl-option=-fno-code all"
---restart cabal.project
+--command "exec wasm32-wasi-cabal repl --project-file=cabal.debug.project --enable-multi-repl --repl-option=-fno-code all"
+--restart cabal.common.project
+--restart cabal.debug.project
 --restart jsaddle-wasm.cabal
