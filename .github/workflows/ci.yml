@@ -12,7 +12,7 @@ jobs:
   formatting:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: haskell-actions/run-ormolu@v17
       - uses: tfausak/cabal-gild-setup-action@v2
         with:
@@ -37,7 +37,7 @@ jobs:
           - flavour: "gmp"
             experimental: true
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -99,7 +99,7 @@ jobs:
           - "9.12"
           - "9.10"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
