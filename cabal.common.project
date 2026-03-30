@@ -11,3 +11,6 @@ source-repository-package
 tests: True
 
 allow-newer: all:jsaddle-wasm
+
+package miso
+  flags: +template-haskell
