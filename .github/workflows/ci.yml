@@ -9,17 +9,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  formatting:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - uses: haskell-actions/run-ormolu@v17
-      - uses: tfausak/cabal-gild-setup-action@v2
-        with:
-          version: 1.6.0.2
-
   ci-wasm:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       pages: write
       id-token: write
@@ -36,7 +27,7 @@ jobs:
           - flavour: "gmp"
             experimental: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -58,7 +49,7 @@ jobs:
       - run: |
           wasm32-wasi-cabal --project-file=cabal.release.project build miso-todomvc --dry-run
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           key: ci-wasm-${{ matrix.flavour }}-${{ hashFiles('dist-newstyle/cache/plan.json') }}
           restore-keys: ci-wasm-${{ matrix.flavour }}-
@@ -82,7 +73,7 @@ jobs:
           wasm32-wasi-cabal --project-file=cabal.release.project haddock --haddock-output-dir=dist-haddock
 
       - if: matrix.flavour == '9.14' && github.event_name == 'push' && github.ref_name == 'master'
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist-haddock
           retention-days: 90
@@ -98,10 +89,10 @@ jobs:
           popd
 
       - if: matrix.flavour == '9.14' && github.event_name == 'push' && github.ref_name == 'master'
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   ci-native:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:
@@ -109,7 +100,7 @@ jobs:
           - "9.12"
           - "9.10"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -125,7 +116,7 @@ jobs:
       - run: |
           cabal --project-file=cabal.release.project build jsaddle-wasm --dry-run
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           key: ci-native-${{ matrix.flavour }}-${{ hashFiles('dist-newstyle/cache/plan.json') }}
           restore-keys: ci-native-${{ matrix.flavour }}-
