@@ -6,7 +6,6 @@ package *
     -fdicts-cheap
     -fexpose-all-unfoldings
     -flate-dmd-anal
-    -flate-specialise
     -fspecialise-aggressively
 
   documentation: True
